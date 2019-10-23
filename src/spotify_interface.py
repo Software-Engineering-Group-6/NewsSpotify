@@ -10,6 +10,7 @@ import base64
 import time
 import requests
 import csv_reader
+import track
 from enum import Enum
 
 # Session details enumeration:
@@ -102,9 +103,12 @@ class spotify_interface:
         res = requests.get(self.sp_search_endpoint, headers = headers, params = payload)
         if res.status_code == 200:
             # good
-            xx = res.json()
-            print(type(xx))
-            return(xx) # todo
+            # now build a list of tracks
+            items = res.json()["tracks"]["items"]
+            out = []
+            for i in items:
+                out.append(track.Track(i))
+            return out
         else:
             # bad
             print("HTTP error {0} in Spotify search operation...".format(res.status_code))
