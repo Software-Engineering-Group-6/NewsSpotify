@@ -12,4 +12,5 @@ A file named `session_details.csv` should be placed under folder `data/` with va
 | spotify_client_id | ... |
 | spotif_client_secret | ... |
 | news_api_key | ... |
+| watson_nlu_api_key | ... |
 
