@@ -29,11 +29,9 @@ class Track:
                 # External URL
                 self.external_url = d["external_urls"]["spotify"]
         except TypeError as te:
-            errno, errstr = te.args
-            print("Type error {0}: {1}".format(errno, errstr))
+            print("Type error: {0}".format(te))
         except KeyError as ke:
-            errno, errstr = ke.args
-            print("Key error {0}: {1}".format(errno, errstr))
+            print("Key error: {0}".format(ke))
         except:
             print("Unexpected error:", sys.exc_info()[0])
 
