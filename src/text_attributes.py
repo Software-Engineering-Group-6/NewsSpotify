@@ -6,9 +6,8 @@
 # a sentence can be and -1.0 the most negative a sentence
 # can be; 0 means neutral sentiment.
 class TextAttributes:
-    key_terms = []
-    overall_sentiment = 0.0
-    
+    # Initialize self.key_terms and
+    # self.overall_sentiment
     def __init__(self, terms, sent):
         self.key_terms = terms
         if sent < -1.0:
