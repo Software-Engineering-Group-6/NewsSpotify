@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # Holds the key terms of a headline or sentence, along
 # with its overall sentiment. Sentiment is a float
 # with range -1.0 to 1.0 where 1.0 is the most positive
