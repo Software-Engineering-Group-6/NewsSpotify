@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import requests
 import base64
 import csv_reader
