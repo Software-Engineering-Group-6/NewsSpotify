@@ -11,22 +11,23 @@ import text_attributes as ta
 # and user defined sentences into key terms and
 # to analyze the overall sentiment.
 class watson_nlu_interface:
-    # _api_user is used as the username
-    _api_user = "apikey"
-    # we get the API key from the session details file
-    _api_key = ""
-    # Name of the API key field in session details file
-    _watson_api_key_field = "watson_nlu_api_key"
-    # Location and name of session details CSV file
-    _session_details_file_location = "../data/session_details.csv"
-    # URL of Watson NLU interface endpoint
-    _watson_nlu_endpoint = "https://gateway-syd.watsonplatform.net/natural-language-understanding/api"
-    # suffix for the watson nlu endpoint which
-    # allows us to point to the right API (and right version of it)
-    _watson_nlu_endpoint_suffix = "/v1/analyze?version=2019-07-12"
-    
-    # initialize the watson nlu interface with the correct API key
+    # initialize the watson nlu interface with the correct API key and
+    # corresponding attributes
     def __init__(self):
+        # _api_user is used as the username
+        self._api_user = "apikey"
+        # we get the API key from the session details file
+        self._api_key = ""
+        # Name of the API key field in session details file
+        self._watson_api_key_field = "watson_nlu_api_key"
+        # Location and name of session details CSV file
+        self._session_details_file_location = "../data/session_details.csv"
+        # URL of Watson NLU interface endpoint
+        self._watson_nlu_endpoint = "https://gateway-syd.watsonplatform.net/natural-language-understanding/api"
+        # suffix for the watson nlu endpoint which
+        # allows us to point to the right API (and right version of it)
+        self._watson_nlu_endpoint_suffix = "/v1/analyze?version=2019-07-12"
+        
         (self._api_key,) = csv_reader.get_csv_prop(self._session_details_file_location, [self._watson_api_key_field])
         
     # this method takes a sentence defined by the user
