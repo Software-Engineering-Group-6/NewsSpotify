@@ -25,15 +25,15 @@ class spotify_interface:
     # Spotify search endpoint
     sp_search_endpoint = "https://api.spotify.com/v1/search"
     
-    # The credentials used to authenticate ourselves
-    # to Spotify:
-    _client_id = ""
-    _client_secret = ""
-    # The token for subsequent communication:
-    _token = ""
-    _token_expiry = None
-    
     def __init__(self):
+        # The credentials used to authenticate ourselves
+        # to Spotify:
+        self._client_id = ""
+        self._client_secret = ""
+        # The token for subsequent communication:
+        self._token = ""
+        self._token_expiry = None
+        
         # Get the credentials from the csv file
         (self._client_id, self._client_secret) = csv_reader.get_csv_prop(s_details.FILE_LOCATION.value,
                                                                          [s_details.CLIENT_ID.value,
@@ -113,5 +113,3 @@ class spotify_interface:
             # bad
             print("HTTP error {0} in Spotify search operation...".format(res.status_code))
             return False
-                
-        
