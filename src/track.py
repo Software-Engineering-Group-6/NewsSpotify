@@ -13,8 +13,13 @@ class Track:
     # Initialize fields with dictionary
     # of fields from JSON
     def __init__(self, d):
-        # Artists
         self.artists = []
+        self.duration = 0
+        self.name = ""
+        self.popularity = 0
+        self.preview_url = ""
+        self.external_url = ""
+        # Artists
         for a in d["artists"]:
             self.artists.append(a["name"])
         # Duration
