@@ -4,22 +4,16 @@ import math
 import sys
 
 class Track:
-    artists = []
-    duration = 0 # 0-100, 100 being the most popular
-    name = ""
-    popularity = 0
-    preview_url = ""
-    external_url = ""
-
     # Initialize fields with dictionary
     # of fields from JSON
     def __init__(self, d):
         self.artists = []
         self.duration = 0
         self.name = ""
-        self.popularity = 0
+        self.popularity = 0 # 0-100, 100 being the most popular
         self.preview_url = ""
         self.external_url = ""
+        
         try:
             # Artists
             for a in d["artists"]:
