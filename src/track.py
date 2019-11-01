@@ -17,16 +17,19 @@ class Track:
         try:
             # Artists
             for a in d["artists"]:
-                self.artists.append(a["name"])
-                # Duration
-                self.duration = d["duration_ms"]
-                # Name of the track
-                self.name = d["name"]
-                # Popularity
-                self.popularity = d["popularity"]
-                # Preview URL
+                if a["name"] != "":
+                    self.artists.append(a["name"])
+            # Duration
+            self.duration = d["duration_ms"]
+            # Name of the track
+            self.name = d["name"]
+            # Popularity
+            self.popularity = d["popularity"]
+            # Preview URL
+            if d["preview_url"] != None:
                 self.preview_url = d["preview_url"]
-                # External URL
+            # External URL
+            if d["external_urls"]["spotify"] != None:
                 self.external_url = d["external_urls"]["spotify"]
         except TypeError as te:
             print("Type error: {0}".format(te))
@@ -39,5 +42,5 @@ class Track:
     # a human readable form
     def duration_readable(self):
         min = math.floor((self.duration / 1000.0) / 60)
-        sec = round((self.duration / 1000.0) % 60.0)
+        sec = math.floor((self.duration / 1000.0) % 60.0)
         return str(min) + ":" + "{0:0=2d}".format(sec)
