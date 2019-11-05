@@ -75,7 +75,7 @@ class test_basic(unittest.TestCase):
         except IOError as ioe:
             print("I/O error: {0}".format(ioe))
         except json.JSONDecodeError:
-            print("Passing JSONDecodeError for a corrupt JSON...")
+            print("Passing *expected* JSONDecodeError for a corrupt JSON...")
             pass
         finally:
             f.close()
@@ -121,6 +121,7 @@ class test_basic(unittest.TestCase):
         t_norm_2 = track.Track(self.f_norm_2)
         # Now corrupt ones
         t_corr_1 = track.Track(self.f_corr_1)
+        print("*Expected* Type Error:")
         t_corr_2 = track.Track(self.f_corr_2)
         
         # Testing loaded JSON
