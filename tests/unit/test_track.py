@@ -46,6 +46,7 @@ class test_basic(unittest.TestCase):
         
         # Load test fixture data
         # Normal and valid JSON first
+        print("Loading good fixtures #1 and #2...")
         try:
             f = open("fixtures/track_normal_1.json", "r")
             self.f_norm_1 = json.load(f)
@@ -57,8 +58,10 @@ class test_basic(unittest.TestCase):
             print("I/O error: {0}".format(ioe))
         except json.JSONDecodeError as jde:
             print("JSON decode error: {0}".format(jde))
+        print("Done.\n")
         
         # Now corrupt JSON 1 - this one should not yield JSONDecodeError
+        print("Loading mock corrupt/bad fixtures #1 and #2. #1 should load, #2 should generate a JSONDecodeError:")
         try:
             f = open("fixtures/track_corrupt_1.json", "r")
             self.f_corr_1 = json.load(f)
@@ -79,8 +82,9 @@ class test_basic(unittest.TestCase):
             pass
         finally:
             f.close()
+        print("Done.\n")
     
-    def test_track_init(self):
+    def test_1_track_init(self):
         # build expected data objects
         # track_normal_1.json
         exp_norm_1 = {}
@@ -115,6 +119,11 @@ class test_basic(unittest.TestCase):
         # track_corrupt_2.json - we expect the same output as with
         # track_corrupt_1.json
         exp_corr_2 = exp_corr_1 
+
+        print("Test #1.1 for track.__init__(...) with good fixture #1:")
+        print("Test #1.2 for track.__init__(...) with good fixture #2:")
+        print("Test #1.3 for track.__init__(...) with bad fixture #1:")
+        print("Test #1.4 for track.__init__(...) with bad fixture #2:")
         
         # Build normal tracks first
         t_norm_1 = track.Track(self.f_norm_1)
@@ -148,6 +157,7 @@ class test_basic(unittest.TestCase):
         self.track_tester(t_corr_1, exp_corr_1)
         # t_corr_2
         self.track_tester(t_corr_2, exp_corr_2)
+        print("Done all sub-tests.\n")
 
     def track_tester(self, t, d):
         self.assertEqual(t.artists, d["artists"])
