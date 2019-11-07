@@ -25,7 +25,7 @@ class spotify_interface:
     # Spotify search endpoint
     sp_search_endpoint = "https://api.spotify.com/v1/search"
     
-    def __init__(self):
+    def __init__(self, file_loc = s_details.FILE_LOCATION.value):
         # The credentials used to authenticate ourselves
         # to Spotify:
         self._client_id = ""
@@ -35,7 +35,7 @@ class spotify_interface:
         self._token_expiry = None
         
         # Get the credentials from the csv file
-        (self._client_id, self._client_secret) = csv_reader.get_csv_prop(s_details.FILE_LOCATION.value,
+        (self._client_id, self._client_secret) = csv_reader.get_csv_prop(file_loc,
                                                                          [s_details.CLIENT_ID.value,
                                                                           s_details.CLIENT_SECRET.value])
 
@@ -59,12 +59,13 @@ class spotify_interface:
             self._token = res.json()["access_token"]
             # store the expiry time of the token
             self._token_expiry = float(res.json()["expires_in"]) + time.time()
+            return True
         else:
             # not good
             print (f"Error trying to connect with {self.sp_token_endpoint} for token request...")
             self._token = ""
             self._token_expiry = 0.0
-            return
+            return False
 
     # This method checks whether the token we currently
     # hold has expired. If it has, request a new one
