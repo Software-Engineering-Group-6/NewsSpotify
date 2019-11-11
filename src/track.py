@@ -42,5 +42,9 @@ class Track:
     # a human readable form
     def duration_readable(self):
         min = math.floor((self.duration / 1000.0) / 60)
-        sec = math.floor((self.duration / 1000.0) % 60.0)
+        sec = (self.duration / 1000.0) % 60.0
+        if math.floor(sec) + 0.5 > sec:
+            sec = math.floor(sec)
+        else:
+            sec = math.ceil(sec)
         return str(min) + ":" + "{0:0=2d}".format(sec)
