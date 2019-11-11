@@ -92,7 +92,7 @@ class spotify_interface:
     def search_tracks(self, terms, limit):
         headers = {"Authorization" : "Bearer {0}".format(self._token)}
         payload = {"q" : "", "type" : "track", "limit" : str(limit)}
-        space = "+" # used to separate search terms
+        space = " " # used to separate search terms
         for t in terms:
             if payload["q"] == "":
                 payload["q"] = t
