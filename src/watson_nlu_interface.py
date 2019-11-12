@@ -12,7 +12,7 @@ import csv_reader
 class watson_nlu_interface:
     # initialize the watson nlu interface with the correct API key and
     # corresponding attributes
-    def __init__(self):
+    def __init__(self, file_loc = ""):
         # _api_user is used as the username
         self._api_user = "apikey"
         # we get the API key from the session details file
@@ -26,8 +26,10 @@ class watson_nlu_interface:
         # suffix for the watson nlu endpoint which
         # allows us to point to the right API (and right version of it)
         self._watson_nlu_endpoint_suffix = "/v1/analyze?version=2019-07-12"
-        
-        (self._api_key,) = csv_reader.get_csv_prop(self._session_details_file_location, [self._watson_api_key_field])
+        # if we are not given a file location, use our file location
+        if file_loc == "":
+            file_loc = self._session_details_file_location
+        (self._api_key,) = csv_reader.get_csv_prop(file_loc, [self._watson_api_key_field])
         
     # this method takes a sentence defined by the user
     # or given by news headlines, breaks it down into
