@@ -11,7 +11,7 @@ import news
 
 class news_interface:
     # News API search endpoint
-    news_search_endpoint = "https://newsapi.org/v2/top-headlines?"
+    news_search_endpoint = "https://newsapi.org/v2/top-headlines"
 
     # session_details.csv location
     session_details_location = "../data/session_details.csv"
