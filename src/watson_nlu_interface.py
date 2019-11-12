@@ -3,7 +3,6 @@
 import requests
 import base64
 import csv_reader
-import text_attributes as ta
 
 # This class implements an interface
 # to IBM Watson's Natural Language Understanding
@@ -32,15 +31,11 @@ class watson_nlu_interface:
         
     # this method takes a sentence defined by the user
     # or given by news headlines, breaks it down into
-    # key terms and figures out the overall sentiment
-    # thanks to Watson's NLU API. We then build
-    # a TextAttributes object from the text_attributes
-    # module with the key terms and overall sentiment
-    # and return that
+    # key terms thanks to Watson's NLU API. We return
+    # a list of essential terms
     def query_text_analyzer(self, text):
         x = base64.urlsafe_b64encode((self._api_user + ":" + self._api_key).encode()).decode()
         headers = {"Content-Type" : "application/json", "Authorization" : "Basic " + x }
-        #payload = {"text" : text, "features" : {"sentiment" : {}, "categories" : {}, "concepts" : {}, "entities" : {}, "keywords" : {} }}
         payload = { "text": text, "features": { "sentiment": {}, "concepts" : {}, "entities" : {}, "keywords" : {} } }
 
         # Make the POST request
@@ -52,13 +47,10 @@ class watson_nlu_interface:
             keywords = res.json()["keywords"]
             for k in keywords:
                 terms.append(k["text"])
-            # get overall sentiment
-            sentiment = res.json()["sentiment"]["document"]["score"]
-            # build object and return it
-            return ta.TextAttributes(terms, sentiment)
+            # return list of terms
+            return terms
         else:
             # not good
             print (f"Error trying to connect with {self._watson_nlu_endpoint} for text analysis...")
-            # return None since we can't build a
-            # TextAttributes object
+            # return None since we failed to query the Watson NLU endpoint
             return None
