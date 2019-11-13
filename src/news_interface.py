@@ -29,6 +29,7 @@ class news_interface:
     # this method returns n News objects with their corresponding headlines
     # and source. if excluded_sources are defined, those news headlines from
     # the specified sources will be excluded from the output
+    # return None if there is an error
     def get_breaking_news(self, n, excluded_sources = []):
         # build the payload to be sent to the news API service
         payload = {"country" : news_interface.news_country, "apiKey" : self._api_key}
