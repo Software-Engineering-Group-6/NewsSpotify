@@ -52,7 +52,15 @@ class news_interface:
                     # if there is no description, exclude it
                     continue
                 else:
-                    news_out.append(news.News(a["description"], a["source"]["name"]))
+                    # check the news headline is long enough, otherwise
+                    # Watson NLU won't be able to analyze it
+                    hl = a["description"]
+                    if len(hl.split()) > 3 and len(hl) > 15:
+                        # it is long enough, add it
+                        news_out.append(news.News(a["description"], a["source"]["name"]))
+                    else:
+                        # it is not long enough, pass on this one
+                        continue
             return news_out
         else:
             # bad
