@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+# Integration tests for Sprint 1 - all the functionality we
+# have implemented so far we try to test together after it
+# has been 'unit tested' and observe the results are consistent
+# with what we expect.
+
 import sys
 sys.path.append("../../src")
 import spotify_interface as s_int
