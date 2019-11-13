@@ -133,12 +133,11 @@ def main():
                 # which will give us a song with good fit given
                 # the headline, and append it to our output tracks
                 for n in top_news:
-                    print("Source:", n.source, " Description:", n.headline)
                     n_terms = wi.query_text_analyzer(n.headline)
                     tokens = tokenize_terms(n_terms)
                     tracks += get_best_fit_track(si, tokens)
                 # now that we have the tracks, print them out
-                pretty_print_tracks(tracks)
+                pretty_print_tracks(tracks, top_news)
 
 # this method takes a list of strings which may be sentences
 # or may have characters such as commas, dots, exclamation marks
@@ -192,9 +191,15 @@ def get_best_fit_track(si, tokens):
 # this method takes a list of Track objects
 # and prints their contents in an orderly
 # manner
-def pretty_print_tracks(tracks):
+def pretty_print_tracks(tracks, news = []):
+    do_news = False
+    if len(news) > 0:
+        do_news = True
     for t in tracks:
         print("==============================================")
+        if do_news:
+            art = news[tracks.index(t)]
+            print("News used:\nSource: {0}\nHeadline: {1}\n".format(art.source, art.headline))
         print("Title:\t\t", t.name)
         print("Artists:\t", ", ".join(t.artists))
         print("Duration:\t", t.duration_readable())
