@@ -48,7 +48,7 @@ class news_interface:
                 elif a["source"]["name"] in excluded_sources:
                     # we excluded this article
                     continue
-                elif a["description"] == "":
+                elif a["description"] == "" or a["description"] == None:
                     # if there is no description, exclude it
                     continue
                 else:
