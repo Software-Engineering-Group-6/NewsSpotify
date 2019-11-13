@@ -48,7 +48,7 @@ class test_basic(unittest.TestCase):
         # make a request with 10 headlines
         # excluding our found source
         ar2 = self.nint.get_breaking_news(10, [ex_ns])
-        self.assertEqual(len(ar2), 10)
+        self.assertTrue(len(ar2) <= 10)
         # check our excluded source is not
         # among the responses
         self.assertTrue(ex_ns not in [a.source for a in ar2])
