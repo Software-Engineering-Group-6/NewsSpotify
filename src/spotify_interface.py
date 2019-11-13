@@ -88,7 +88,7 @@ class spotify_interface:
     # This method retrieves a set of tracks from Spotify
     # according to given search terms in a list
     # Returns tracks of type Track class,
-    # returns False if unsuccessful
+    # returns None if unsuccessful
     def search_tracks(self, terms, limit):
         headers = {"Authorization" : "Bearer {0}".format(self._token)}
         payload = {"q" : "", "type" : "track", "limit" : str(limit)}
@@ -113,4 +113,4 @@ class spotify_interface:
         else:
             # bad
             print("HTTP error {0} in Spotify search operation...".format(res.status_code))
-            return False
+            return None

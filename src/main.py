@@ -11,11 +11,18 @@ def main():
     
     si.request_token()
     tracks = si.search_tracks(["circles", "post", "malone"], 10)
-    for i in tracks:
-        print("Name: ", i.name, "  Artists: ", i.artists, "  Duration: ", i.duration_readable())
+    if tracks is None:
+        print("No tracks returned")
+    else:
+        for i in tracks:
+            print("Name: ", i.name, "  Artists: ", i.artists, "  Duration: ", i.duration_readable())
     news = ni.get_breaking_news(10, ["BBC News"])
     for n in news:
         print("Source: {0}, Headline: {1}".format(n.source, n.headline))
+    sent = "I like red apples"
+    terms = wi.query_text_analyzer(sent)
+    for t in terms:
+        print(t)
     
 if __name__ == "__main__":
     main()
