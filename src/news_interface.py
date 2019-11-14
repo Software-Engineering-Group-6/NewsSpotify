@@ -49,15 +49,18 @@ class news_interface:
                     # we excluded this article
                     continue
                 elif a["description"] == "" or a["description"] == None:
-                    # if there is no description, exclude it
-                    continue
+                    # if there is no description, try to use the title
+                    title_art = self.get_news_object(a, use_description = False)
+                    if title_art != None:
+                        # is it not None, so it is valid, add it
+                        news_out.append(title_art)
+                    else:
+                        continue
                 else:
-                    # check the news headline is long enough, otherwise
-                    # Watson NLU won't be able to analyze it
-                    hl = a["description"]
-                    if len(hl.split()) > 3 and len(hl) > 15:
+                    descr_art = self.get_news_object(a)
+                    if descr_art != None:
                         # it is long enough, add it
-                        news_out.append(news.News(a["description"], a["source"]["name"]))
+                        news_out.append(descr_art)
                     else:
                         # it is not long enough, pass on this one
                         continue
@@ -67,3 +70,39 @@ class news_interface:
             # report the error and report None
             print("HTTP error {0} in News search operation...".format(res.status_code))
             return None
+
+    # this method returns a News object for a given article
+    # returned by the News API
+    def get_news_object(self, art, use_description = True):
+        # check the news headline is long enough, otherwise
+        # Watson NLU won't be able to analyze it
+        if use_description:
+            key = "description"
+        else:
+            key = "title"
+            # also try to clean the title
+            art[key] = self.clean_news_title(art[key])
+        hl = art[key]
+        if len(hl.split()) > 3 and len(hl) > 15:
+            # it is long enough, use it
+            return news.News(art[key], art["source"]["name"])
+        else:
+            # it is not long enough, pass on this one
+            return None
+
+    # this method tries to cleanse an article title by trying to
+    # remove the name of the source contained in the title
+    # if we are using the article's description this is not
+    # necessary
+    def clean_news_title(self, title):
+        # try to find the first instance of the character '-'
+        # from the back
+        for i in range(len(title) - 1, -1, -1):
+            if title[i] == '-':
+                # we found the point at which the news
+                # title begins
+                # slice it and return it
+                return title[:i]
+        # otherwise, if we found nothing, return the
+        # title as is
+        return title
