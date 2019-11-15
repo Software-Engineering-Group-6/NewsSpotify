@@ -105,7 +105,12 @@ def main():
         else:
             # we are okay to continue
             # initialize our Spotify interface
-            si = s_int.spotify_interface()
+            si = None
+            try:
+                si = s_int.spotify_interface()
+            except:
+                # cannot continue
+                return
             # request our communication token
             res = si.request_token()
             if res == False:
@@ -133,11 +138,22 @@ def main():
                     # exit
                     return
             else:
-                ni = n_int.news_interface()
-                wi = w_int.watson_nlu_interface()
+                ni = None
+                wi = None
+                try:
+                    ni = n_int.news_interface()
+                    wi = w_int.watson_nlu_interface()
+                except:
+                    # cannot continue, return
+                    return
                 tracks = []
                 # get max_songs top news, excluding indicated sources
                 top_news = ni.get_breaking_news(max_songs, excl_sources)
+                if top_news is None:
+                    # we did not get news, something got wrong
+                    print("Error: News API did not return any news.\n")
+                    print("Please check your News API is correct and the News API service is online.")
+                    return
                 # pass those news' headlines into Watson NLU
                 # and get their fundamental terms
                 # then tokenize those fundamental terms
@@ -146,6 +162,10 @@ def main():
                 # the headline, and append it to our output tracks
                 for n in top_news:
                     n_terms = wi.query_text_analyzer(n.headline)
+                    if n_terms is None:
+                        # watson NLU failed
+                        print("\nPlease try again or reduce number of requests; or check your API key is correct.")
+                        return
                     tokens = tokenize_terms(n_terms)
                     tracks += get_best_fit_track(si, tokens)
                 # now that we have the tracks,

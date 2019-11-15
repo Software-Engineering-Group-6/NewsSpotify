@@ -24,8 +24,14 @@ class news_interface:
 
     def __init__(self, file_loc = session_details_location):
         # retrieve the API key from the session_details.csv file
-        (self._api_key,) = csv_reader.get_csv_prop(file_loc, [news_interface.api_property])
-        
+        try:
+            (self._api_key,) = csv_reader.get_csv_prop(file_loc, [news_interface.api_property])
+        except:
+            # it failed
+            print("Error: cannot find News API's API Key.")
+            print("\nPlease make sure your session_details.csv file has all the connection details")
+            raise Exception
+            
     # this method returns n News objects with their corresponding headlines
     # and source. if excluded_sources are defined, those news headlines from
     # the specified sources will be excluded from the output
