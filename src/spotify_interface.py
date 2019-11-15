@@ -35,9 +35,14 @@ class spotify_interface:
         self._token_expiry = None
         
         # Get the credentials from the csv file
-        (self._client_id, self._client_secret) = csv_reader.get_csv_prop(file_loc,
+        try:
+            (self._client_id, self._client_secret) = csv_reader.get_csv_prop(file_loc,
                                                                          [s_details.CLIENT_ID.value,
                                                                           s_details.CLIENT_SECRET.value])
+        except:
+            print("Error: cannot find Spotify's client secret and/or Spotify's client ID to obtain API Key.")
+            print("\nPlease make sure your session_details.csv file has all the connection details")
+            raise Exception
 
     # This method requests an access token from Spotify
     # If things are good, return True, otherwise return False

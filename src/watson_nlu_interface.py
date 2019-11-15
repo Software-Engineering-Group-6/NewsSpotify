@@ -29,7 +29,13 @@ class watson_nlu_interface:
         # if we are not given a file location, use our file location
         if file_loc == "":
             file_loc = self._session_details_file_location
-        (self._api_key,) = csv_reader.get_csv_prop(file_loc, [self._watson_api_key_field])
+        try:
+            (self._api_key,) = csv_reader.get_csv_prop(file_loc, [self._watson_api_key_field])
+        except:
+            # it failed
+            print("Error: cannot find Watson NLU's API Key.")
+            print("\nPlease make sure your session_details.csv file has all the connection details")
+            raise Exception
         
     # this method takes a sentence defined by the user
     # or given by news headlines, breaks it down into
