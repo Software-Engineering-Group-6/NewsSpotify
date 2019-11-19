@@ -42,7 +42,7 @@ class spotify_interface:
         except:
             print("Error: cannot find Spotify's client secret and/or Spotify's client ID to obtain API Key.")
             print("\nPlease make sure your session_details.csv file has all the connection details")
-            raise Exception
+            return
 
     # This method requests an access token from Spotify
     # If things are good, return True, otherwise return False
